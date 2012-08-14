@@ -1,4 +1,20 @@
-<html>
+	<?php
+	//1. connect databases;
+	$link = mysql_connect('localhost', 'root', 'wordpress');
+	if (!$link) {
+		die('Could not connect:'.myslq_error());
+	}
+	//2. seletcion db
+	mysql_select_db('opentutorials');
+	mysql_query("set session character_set_connection=utf8;");
+	mysql_query("set session character_set_results=utf8;");
+	mysql_query("set session character_set_client=utf8;");
+	if (!empty($_GET['id'])) {
+		$query = "SELECT * FROM topic where id=" . $_GET['id'];
+		$result = mysql_query($query);
+		$topic = mysql_fetch_assoc($result);
+	}
+	?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -17,29 +33,68 @@
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	<style>
+  	body {
+            font-size:0.8em;   
+            font-family: dotum;
+            line-height:1.6em;
+        }
+        body.black{
+            background-color: black;
+            color:white;
+        }
+        body.black a{
+            color:white;
+        }
+        body.black a:hover{
+            color:#f60;
+        }
+        body.black header{
+            border-bottom:1px solid #333;
+        }
+        body.black nav {
+            border-right: 1px solid #333;
+        }
+        header{
+            border-bottom:1px solid #ccc;
+            padding: 20px 0; }
+        #toolbar {
+            padding:10px;
+            float:right;
+        }
+        nav{
+            float:left;
+            margin-right: 20px;
+            min-height: 500px;
+            border-right:1px solid #ccc;
+        }
+        nav ul{
+            list-style:none;
+            padding-left:0;
+            padding-right:20px;
+        }
+        article{
+            float:left;
+        }
+        footer{
+            clear:both;
+        }
+        a {
+            text-decoration:none;
+        }
+        a:link,
+        a:visited{
+            color:#333;
+        }
+        a:hover {
+            color:#f60;
+        }
+        h1 {
+            font-size:1.4em;
+        }	
+	</style>
 </head>
 <body id="body">
-	<?php
-	//1. connect databases;
-	$link = mysql_connect('localhost', 'root', 'wordpress');
-	if (!$link) {
-		echo "<p>not connection</p>";
-	} else {
-		echo "<p> 연결 connection</p>";
-	}
-	//2. seletcion db
-	mysql_select_db('opentutorials');
-	mysql_query("set session character_set_connection=utf8;");
-	mysql_query("set session character_set_results=utf8;");
-	mysql_query("set session character_set_client=utf8;");
-	if (!empty($_GET['id'])) {
-		$query = "SELECT * FROM topic where id=" . $_GET['id'];
-		$result = mysql_query($query);
-		$topic = mysql_fetch_assoc($result);
-		echo $result . 'inner<br/>';
-	}
-	echo $result . 'outer';
-	?>
 	<div>
 		<header>
 			<h1>Javascript</h1>
